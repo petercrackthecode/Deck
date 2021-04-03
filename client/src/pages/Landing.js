@@ -1,8 +1,37 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios'
 
 function Landing() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleChange = (e) => {
+    //       [e.target.name]: e.target.value,
+    if(e.target.name === 'email')
+        setEmail(e.target.value)
+    else 
+    setPassword(e.target.value)
+      };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios
+          .post("http://localhost:5000/api/auth/login", {
+            email: email,
+            password: password,
+          })
+          .then((res) => {
+           console.log(res)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      console.log(email)
     return (
         <div>
+             <form  onSubmit={handleSubmit}>
             <label>
               <b>Email:</b>
               <input
@@ -10,6 +39,7 @@ function Landing() {
                 type=""
                 placeholder="Email"
                 required
+                onChange={handleChange}
                 className="form-control"
               />
             </label><br />
@@ -19,6 +49,7 @@ function Landing() {
                 name="password"
                 type="password"
                 placeholder="Password"
+                onChange={handleChange}
                 required
                 className="form-control"
               />
@@ -29,7 +60,7 @@ function Landing() {
             >
               Sign In
             </button>
-
+            </form>
         </div>
     )
 }

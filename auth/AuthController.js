@@ -3,45 +3,45 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-var config = require('../config');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var User = require('../user/User');
 var VerifyToken = require('./VerifyToken');
-const verifyToken = require('./VerifyToken');
 
-router.post('/register', function(req, res) {
-  
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-    
-    User.create({
-      name : req.body.name,
-      email : req.body.email,
-      password : hashedPassword
-    },
-    function (err, user) {
-      if (err){
-        console.log(err);
-        return res.status(500).send("There was a problem registering the user.")
-      } 
-      // create a token
-      var token = jwt.sign({ id: user._id }, config.secret, {
-        expiresIn: 86400 // expires in 24 hours
-      });
-      res.status(200).send({ auth: true, token: token });
-    }); 
+router.post('/register', (req, res) => {
+
+    User.findOne({email:req.body.email}, async(error,doc)=>{
+      if(doc)
+      return res.send({error:'Email already exists! Sign in instead.',user:null,token:null});
+
+      //Hash Passwords
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(req.body.password,salt);
+      const user = new User({
+          name:req.body.name,
+          email:req.body.email,
+          password:hashedPassword
+      })
+      user.save()
+      .then((resp)=>{
+          const token = jwt.sign({_id: resp._id}, process.env.TOKEN_SECRET)
+          console.log(resp);
+          res.send({user:resp,token:token,error:null})
+      }).catch((err)=>res.status(400).send(err))
+      
+  })
   });
 
-  router.get('/me', VerifyToken, function(req, res,next) {
+  router.get('/me', VerifyToken, (req, res) => {
     var token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
     
-    jwt.verify(token, config.secret, function(err, decoded) {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
       if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-      
-      User.findById(decoded.id, 
+      console.log(decoded);
+      User.findById(decoded._id, 
         { password: 0 }, // projection
-        function (err, user) {
+        (err, user) => {
           if (err) return res.status(500).send("There was a problem finding the user.");
           if (!user) return res.status(404).send("No user found.");
           
@@ -50,21 +50,22 @@ router.post('/register', function(req, res) {
     });
   });
 
-  router.post('/login', function(req, res) {
-
-    User.findOne({ email: req.body.email }, function (err, user) {
-      if (err) return res.status(500).send('Error on the server.');
-      if (!user) return res.status(404).send('No user found.');
-      
-      var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-      if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-      
-      var token = jwt.sign({ id: user._id }, config.secret, {
-        expiresIn: 86400 // expires in 24 hours
-      });
-      
-      res.status(200).send({ auth: true, token: token });
-    });
+  router.post('/login', (req, res) => {
+    User.findOne({email:req.body.email},async (err,doc)=>{
+      console.log('doc', doc)
+      if(!doc){
+          return res.send({error:'Email unregistered. Signup now!',auth:false, user:null,token:null});//{user,error}
+      }
+      const checkPassword = await bcrypt.compare(req.body.password,doc.password)
+      if(!checkPassword){
+          return res.send({error:'Password is incorrect!',user:null, auth:false ,token:null});
+      }
+      //token
+      const token = jwt.sign({_id: doc._id}, process.env.TOKEN_SECRET, {
+        expiresIn:86400
+      })
+      res.header('auth-token',token).send({error:null, auth:true,user:doc,token:token})//user data error null
+  })
     
   });
 
