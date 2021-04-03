@@ -7,27 +7,49 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var User = require('../user/User');
 var VerifyToken = require('./VerifyToken');
+const  Domain = require('../company_domain_list/DomainSchema');
+
+router.get('/list',(req,res)=>{
+  const temp= new Domain({
+    company_name:"friebase",
+    domain_list:['www.xyz.com','www.google.com','www.stackoverflow.com']
+  })
+  temp.save()
+  .then(resp=>res.json(resp))
+})
 
 router.post('/register', (req, res) => {
 
     User.findOne({email:req.body.email}, async(error,doc)=>{
       if(doc)
       return res.send({error:'Email already exists! Sign in instead.',user:null,token:null});
+      const domList=[]
+      Domain.findOne({company_name:req.body.company_name},async (err,doc)=>{
+        doc.domain_list.forEach((item)=>{
+          var temp={
+            name:item,
+            status:"disabled"
+          }
+          domList.push(temp)
+        })
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(req.body.password,salt);
+        const user = new User({
+            name:req.body.name,
+            email:req.body.email,
+            password:hashedPassword,
+            token: jwt.sign({email:req.body.email}, process.env.TOKEN_SECRET),
+            company_name: req.body.company_name,
+            domains: domList
+        })
+        user.save()
+        .then((resp)=>{
+            res.send({user:resp,error:null})
+        }).catch((err)=>res.status(400).send(err))
+      })
 
       //Hash Passwords
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(req.body.password,salt);
-      const user = new User({
-          name:req.body.name,
-          email:req.body.email,
-          password:hashedPassword
-      })
-      user.save()
-      .then((resp)=>{
-          const token = jwt.sign({_id: resp._id}, process.env.TOKEN_SECRET)
-          console.log(resp);
-          res.send({user:resp,token:token,error:null})
-      }).catch((err)=>res.status(400).send(err))
+     
       
   })
   });
