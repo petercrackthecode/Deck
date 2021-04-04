@@ -1,12 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 //AuthRoutes
 var UserController = require('./user/UserController'); 
 var AuthController = require('./auth/AuthController');
-
 
 const app = express();
 app.use(cors());
@@ -17,8 +15,8 @@ mongoose.connect(process.env.DB_CONNECT,{useNewUrlParser:true,useUnifiedTopology
 .then(()=>console.log("Connected to MongoDB"))
 .catch((err)=> console.log(err))
 //Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(express.json());
+app.use(express.urlencoded({extended:false}))
 
 app.use('/api/auth', AuthController);
 app.use('/users', UserController);
