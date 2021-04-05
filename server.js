@@ -22,5 +22,5 @@ app.use('/api/auth', AuthController);
 app.use('/users', UserController);
 
 
-const Port = 5000;
-app.listen(Port, ()=>console.log('Server up and running'));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=>console.log('Server up and running'));
