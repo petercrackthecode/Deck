@@ -1,10 +1,12 @@
 import axios from 'axios'
 import React, {useState,useEffect} from 'react'
 import {getToken} from '../utils/common'
+import {useHistory} from 'react-router-dom'
 
 function UserProfile({userId}) {
 
-    const [user,setUser] = useState('')
+    const [user,setUser] = useState('');
+    let history = useHistory();
 
     useEffect(() => {
         if(userId){
@@ -19,16 +21,20 @@ function UserProfile({userId}) {
         })
         .then((res)=> {
             setUser(res.data)
-            console.log(res.data.name)
+            console.log(res.data)
         })
         .catch((err)=> err)
+    }
+
+    const handleClick = () => {
+        history.push('/edituser')
     }
 
     return (
         <div>
             <h3>{user.name}</h3>
-            <p>Company Name</p>
-            <button>Edit Profile</button>
+            <p>{user.company_name}</p>
+            <button onClick={handleClick}>Edit Profile</button>
         </div>
     )
 }
