@@ -25,4 +25,4 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/auth", AuthController);
 app.use("/users", UserController);
 
-app.listen(process.env.PORT, () => console.log("Server up and running"));
+app.listen(process.env.PORT, () => console.log("Server up and running", process.env.PORT));
