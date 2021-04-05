@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
+.signInContainer{
+    width: 50vw;
+    padding-top: 80px;
+    height: 70vh;
+}
+
+.signInContainer h1{
+    font-family: "Montserrat", sans-serif;
+    font-size: 60px;
+    font-weight: bolder;
+    margin-bottom: 80px;
+}
+
+.form-control{
+    background-color: #f2ebeb;
+    outline: none;
+    border: none;
+    padding: 15px;
+    margin: 10px;
+    width: 300px;
+    font-family: "Poppins", sans-serif;
+}
+
+.loginButton{
+    background-color: #ff4b1f;
+    color: white;
+    padding: 20px;
+    width: 200px;
+    border-radius: 30px;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    margin-top: 50px;
+    outline: none;
+}
+
+.loginButton:hover{
+    cursor: pointer;
+}
