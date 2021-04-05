@@ -2,8 +2,13 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { setUserSession } from '../utils/common';
 import {useHistory} from 'react-router-dom'
+import Layout from '../components/Layout';
+import logo from '../assets/logo.png'
+import SignIn from '../components/SignIn';
+import '../styles/Login.css'
+import Greeting from '../components/Greeting';
 
-function Landing({setUserid}) {
+function Login({setUserid}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,8 +41,22 @@ function Landing({setUserid}) {
       };
       console.log(email)
     return (
-        <div>
-             <form  onSubmit={handleSubmit}>
+      <Layout>
+        <div className="Login">
+             <img className="logo" src={logo}/>
+             <div className="row">
+               <SignIn setUserid={setUserid}/>
+               <Greeting />
+             </div>
+        </div>
+      </Layout>
+    )
+}
+
+export default Login
+
+
+{/* <form  onSubmit={handleSubmit}>
             <label>
               <b>Email:</b>
               <input
@@ -66,9 +85,4 @@ function Landing({setUserid}) {
             >
               Sign In
             </button>
-            </form>
-        </div>
-    )
-}
-
-export default Landing
+            </form> */}
