@@ -4,9 +4,9 @@ import { setUserSession } from '../utils/common';
 import {useHistory} from 'react-router-dom'
 import Layout from '../components/Layout';
 import logo from '../assets/logo.png'
-import SignIn from '../components/SignIn';
+import Register from '../components/Register';
 import '../styles/Login.css'
-import Greeting from '../components/Greeting';
+import GreetingTwo from '../components/GreetingTwo';
 
 function SignUp({setUserid}) {
 
@@ -45,8 +45,8 @@ function SignUp({setUserid}) {
         <div className="Login">
              <img className="logo" src={logo}/>
              <div className="row">
-               <Greeting />
-               <SignIn setUserid={setUserid}/>
+               <GreetingTwo />
+               <Register setUserid={setUserid}/>
              </div>
         </div>
       </Layout>
