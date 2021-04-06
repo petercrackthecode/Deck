@@ -5,6 +5,7 @@ import UserProfile from './pages/UserProfile'
 import EditUser from './pages/EditUser';
 import {Link, Switch, Route} from 'react-router-dom'
 import React, {useState} from 'react'
+import Admin from './pages/Admin';
 
 function App() {
   const [userId, setUserid] = useState('')
@@ -15,6 +16,7 @@ function App() {
       <Route path='/signup' exact render={()=><SignUp setUserid={setUserid}/>} />
       <Route path='/user' exact render={()=><UserProfile userId={userId}/>} />
       <Route path='/edituser' render={()=><EditUser  userId={userId}/>}/>
+      <Route path='/admin' render={()=><Admin userId={userId}/>}/>
       </Switch>
     </div> 
   );
