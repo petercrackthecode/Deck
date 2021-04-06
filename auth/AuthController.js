@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
         doc.domain_list.forEach((item)=>{
           var temp={
             name:item,
-            status:"disabled"
+            status:"pending"
           }
           domList.push(temp)
         })
