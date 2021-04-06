@@ -1,0 +1,49 @@
+.userCardContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #F2EEEE;
+    padding: 15px;
+}
+
+.endContainer{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.userCardContainer h1{
+    font-size: 25px;
+    margin: 0;
+    padding: 10px;
+    font-family: "Poppins", sans-serif;
+    font-weight: lighter;
+}
+
+.endContainer a{
+    font-size: 25px;
+    padding: 10px;
+    margin: 0;
+    margin-right: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 35px;
+}
+
+.endContainer img{
+    width: 30px;
+    height: 30px;
+}
+
+.active{
+    background-color: #6EF458;
+}
+
+.pending{
+    background-color: #C7C7C7;
+}
+
+.disabled{
+    background-color: #FF6666;
+}
