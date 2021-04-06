@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
         doc.domain_list.forEach((item)=>{
           var temp={
             name:item,
-            status:"disabled"
+            status:"pending"
           }
           domList.push(temp)
         })
@@ -98,8 +98,8 @@ router.post('/register', (req, res) => {
       var hashedPassword = await bcrypt.hash(req.body.password,salt);
     }
     var presentData = await User.findOne({_id:req.body._id})
-    req.body?.name ? presentData.name=req.body.name : presentData=presentData
-    req.body?.company_name ? presentData.company_name=req.body.company_name: presentData=presentData;
+    presentData.name=req.body?.name
+    presentData.company_name=req.body?.company_name
     req.body?.password? presentData.password=hashedPassword : presentData=presentData;
     var update = await User.findOneAndUpdate({_id:req.body._id}, presentData,{new:true})
     res.json(update) 
