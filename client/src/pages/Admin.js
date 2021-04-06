@@ -5,7 +5,7 @@ import UserCard from '../components/UserCard'
 import '../styles/Admin.css'
 
 function Admin() {
-    const [data,setData] =useState('')
+    const [data,setData] =useState([])
     const [user, setUser] = useState('');
 
     useEffect(() => {
@@ -18,7 +18,6 @@ function Admin() {
             setData(res.data)
         })
     }
-    console.log(data)
     return (
         <div>
             <Navbar />
@@ -38,16 +37,8 @@ function Admin() {
                 <h2>Name</h2>
                 <div className="userContainer">
                     {
-                        data.map(item => {
-                           return <UserCard  name={item.name} />
-                        })
+                        data.map(item => <UserCard  name={item.name} />)
                     }
-                    {/* {
-                        Object.keys(data).map((item,i)=>{
-                            <UserCard key={i} name={data[item].name} />
-                        })
-                    } */}
-                    {/* <UserCard key={i} name={data[item].name} /> */}
                 </div>
             </div>
         </div>

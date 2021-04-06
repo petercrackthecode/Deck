@@ -2,8 +2,7 @@ import React from 'react'
 import icon from '../assets/settings.png'
 import '../styles/UserCard.css'
 
-function UserCard(name) {
-    console.log(name);
+function UserCard({name}) {
     return (
         <div className="userCardContainer">
             <h1>{name}</h1>
