@@ -1,12 +1,14 @@
 import axios from 'axios'
 import React, { useEffect,useState } from 'react'
 import Navbar from '../components/Navbar'
+import icon from '../assets/settings.png'
 import UserCard from '../components/UserCard'
 import '../styles/Admin.css'
 
 function Admin() {
     const [data,setData] =useState([])
     const [user, setUser] = useState('');
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         onPageLoad()
@@ -15,7 +17,12 @@ function Admin() {
     const onPageLoad = () => {
         axios.get('http://localhost:5000/users/')
         .then((res)=>{
-            setData(res.data)
+            const temp = []
+            res.data.map((item) => {
+                temp.push(item)
+            })
+            setData(temp)
+            setLoading(false)
         })
     }
     return (
