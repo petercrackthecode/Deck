@@ -1,12 +1,14 @@
 import axios from 'axios'
 import React, { useEffect,useState } from 'react'
 import Navbar from '../components/Navbar'
+import icon from '../assets/settings.png'
 import UserCard from '../components/UserCard'
 import '../styles/Admin.css'
 
 function Admin() {
-    const [data,setData] =useState('')
+    const [data,setData] =useState([])
     const [user, setUser] = useState('');
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         onPageLoad()
@@ -15,7 +17,12 @@ function Admin() {
     const onPageLoad = () => {
         axios.get('http://localhost:5000/users/')
         .then((res)=>{
-            setData(res.data)
+            const temp = []
+            res.data.map((item) => {
+                temp.push(item)
+            })
+            setData(temp)
+            setLoading(false)
         })
     }
     console.log(data)
@@ -37,16 +44,22 @@ function Admin() {
                 </div>
                 <h2>Name</h2>
                 <div className="userContainer">
-                    {
-                        data.map(item => {
-                           return <UserCard  name={item.name} />
+                    {loading ? null :
+                    
+                        data.map((item) => {
+                            const name = item.name
+                            console.log(item)
+                            return(
+                                <div className="userCardContainer">
+                                    <h1>{name}</h1>
+                                    <div className="endContainer">
+                                        <a className="active">Active</a>
+                                        <img src={icon}/>
+                                    </div>
+                                </div>
+                            )
                         })
                     }
-                    {/* {
-                        Object.keys(data).map((item,i)=>{
-                            <UserCard key={i} name={data[item].name} />
-                        })
-                    } */}
                     {/* <UserCard key={i} name={data[item].name} /> */}
                 </div>
             </div>
