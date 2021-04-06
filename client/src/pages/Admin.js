@@ -11,14 +11,14 @@ function Admin() {
                 <div className="searchContainer">
                     <h1 className="adminContainerHeading">Current Users</h1>
                     <label>
-                    <input
-                        name="search"
-                        type=""
-                        placeholder="Search Users..."
-                        required
-                        className="form-control"
-                    />
-                </label>
+                        <input
+                            name="search"
+                            type=""
+                            placeholder="Search Users..."
+                            required
+                            className="form-control"
+                        />
+                    </label>
                 </div>
                 <h2>Name</h2>
                 <div className="userContainer">
