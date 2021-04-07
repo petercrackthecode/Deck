@@ -1,41 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Service from '../components/Service'
 import UserInfo from '../components/UserInfo'
 import '../styles/UserPage.css'
 import axios from 'axios'
 
-function UserPage({userId}) {
-    console.log(userId)
-    const domains = [
-        {
-            name: "google.com",
-            status: "active"
-        },
-        {
-            name: "figma.com",
-            status: "disabled"
-        }
-    ]
+function UserPage(props) {
+    // console.log(userId)
+const [domains, setDomains] = useState([])
+    const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
+    console.log(props)
+    const getDomains = (e) => {
+        axios.post('http://localhost:5000/admin/search-user', {
+            email : props.location.state.email,
+            _id: LoggedInUserData['_id']
+        })
+        .then((res)=>{
+            setDomains(res.data)
+        })
+    }
+    useEffect(() => {
+        getDomains()
+    }, [])
 
-    console.log(domains)
     const handleChange = (e) => {
-        for (var i = 0; i < domains.length; i++){
-            if (domains[i].name == e.target.value){
-                domains[i].status = e.target.checked == true ? "active" : "disabled";
+        var copydomains=domains
+        for (var i = 0; i < copydomains.length; i++){
+            if (copydomains[i].name == e.target.value){
+                copydomains[i].status = e.target.checked == true ? "active" : "disabled";
                 break;
             }
         }
         //Post updated
-        console.log(domains)
+        console.log(copydomains)
         axios.post('http://localhost:5000/admin/status',
         {
-            _id:userId,            
+            _id:LoggedInUserData['_id'],            
             email:'testanjali@test.com',
-            status: domains
+            status: copydomains
         })
-        .then(res => console.log(res))
-        .catch(err=>console.log(err))
+        .then(data => res.json(data))
+        .catch(err=>res.json(err))
     }
 
 

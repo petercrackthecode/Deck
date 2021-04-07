@@ -30,8 +30,9 @@ function SignIn({setUserid}) {
             console.log(res)
            setUserid(res.data.user._id)
            setUserSession(res.data.token, res.data.user)
-           history.push('/user')
-          })
+           if (res.data.user.admin === true) history.push("/admin");
+           else history.push("/user");
+        })
           .catch((err) => {
             console.log(err);
           });

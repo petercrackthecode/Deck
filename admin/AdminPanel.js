@@ -19,10 +19,18 @@ User.findOne({_id:userId}, (err,doc)=>{
   else{
     next();
   }
-  
 })
 }
-
+router.post('/list-all',(req,res)=>{
+  User.findOne({_id:req.body._id})
+  .then((comp)=>{
+    User.find({company_name:comp.company_name})
+    .then((data)=>{
+      res.send(data)
+    })
+  })
+  .catch(err=>res.send(err))
+})
 router.post('/search-user',isAdmin, (req,res) => {
   var email = req.body.email;
   User.findOne({email:email},(err,doc)=>{

@@ -17,8 +17,8 @@ function App() {
       <Route path='/signup' exact render={()=><SignUp setUserid={setUserid}/>} />
       <Route path='/profile' exact render={()=><UserProfile userId={userId}/>} />
       <Route path='/edituser' render={()=><EditUser  userId={userId}/>}/>
-      <Route path='/admin' render={()=><Admin userId={userId}/>}/>
-      <Route path='/user' render={()=><UserPage userId={userId}/>}/>
+      <Route path='/admin' component={Admin}/>
+      <Route path='/user' component={UserPage}/>
       </Switch>
     </div> 
   );
