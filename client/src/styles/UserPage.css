@@ -1,0 +1,37 @@
+.userPageContainer{
+    text-align: left;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+
+.userPageContainer h2{
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    font-weight: lighter;
+}
+
+.userStatusContainer{
+    display: flex;
+    align-items: center;
+}
+
+.userStatusContainer h1{
+    font-family: "Poppins", sans-serif;
+    font-weight: lighter;
+    font-size: 40px;
+    margin: 0px 20px 0px 0px;
+}
+
+.userStatusContainer a{
+    font-family: "Poppins", sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+    margin: 0;
+    padding: 10px 20px 10px 20px;
+    border-radius: 25px;
+}
+
+.servicesContainer {
+    display: flex;
+    flex-wrap: wrap;
+}

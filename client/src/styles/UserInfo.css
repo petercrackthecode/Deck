@@ -1,0 +1,17 @@
+.userInfoContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.userInfoContainer a{
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+}
+
+.field{
+    padding: 10px;
+    background-color: #F2EEEE;
+    margin-right: 10px;
+    width: 75px;
+}

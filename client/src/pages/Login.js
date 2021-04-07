@@ -1,10 +1,18 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { setUserSession } from '../utils/common';
+import {useHistory} from 'react-router-dom'
+import Layout from '../components/Layout';
+import logo from '../assets/logo.png'
+import SignIn from '../components/SignIn';
+import '../styles/Login.css'
+import Greeting from '../components/Greeting';
 
-function Landing() {
+function Login({setUserid}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    let history = useHistory();
 
     const handleChange = (e) => {
     //       [e.target.name]: e.target.value,
@@ -14,15 +22,18 @@ function Landing() {
     setPassword(e.target.value)
       };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        axios
+        await axios
           .post("http://localhost:5000/api/auth/login", {
             email: email,
             password: password,
           })
           .then((res) => {
-           console.log(res)
+            console.log(res)
+           setUserid(res.data.user._id)
+           setUserSession(res.data.token, res.data.user)
+           history.push('/user')
           })
           .catch((err) => {
             console.log(err);
@@ -30,8 +41,22 @@ function Landing() {
       };
       console.log(email)
     return (
-        <div>
-             <form  onSubmit={handleSubmit}>
+      <Layout>
+        <div className="Login">
+             <img className="logo" src={logo}/>
+             <div className="row">
+               <SignIn setUserid={setUserid}/>
+               <Greeting />
+             </div>
+        </div>
+      </Layout>
+    )
+}
+
+export default Login
+
+
+{/* <form  onSubmit={handleSubmit}>
             <label>
               <b>Email:</b>
               <input
@@ -60,9 +85,4 @@ function Landing() {
             >
               Sign In
             </button>
-            </form>
-        </div>
-    )
-}
-
-export default Landing
+            </form> */}

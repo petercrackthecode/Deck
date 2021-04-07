@@ -37,6 +37,20 @@ router.post("/register", (req, res) => {
         });
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    User.findOne({email:req.body.email}, async(error,doc)=>{
+      if(doc)
+      return res.send({error:'Email already exists! Sign in instead.',user:null,token:null});
+      const domList=[]
+      Domain.findOne({company_name:req.body.company_name},async (err,doc)=>{
+        doc.domain_list.forEach((item)=>{
+          var temp={
+            name:item,
+            status:"pending"
+          }
+          domList.push(temp)
+        })
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(req.body.password,salt);
         const user = new User({
           name: req.body.name,
           email: req.body.email,
@@ -80,6 +94,13 @@ router.get("/me", VerifyToken, (req, res) => {
         res.status(200).send(user);
       }
     );
+      //token 
+      const token = jwt.sign({_id: doc._id}, process.env.TOKEN_SECRET, {
+        expiresIn:86400
+      })
+      res.header('auth-token',token).send({error:null, auth:true,user:doc,token:token})//user data error null
+  })
+    
   });
 });
 
@@ -112,5 +133,19 @@ router.post("/login", (req, res) => {
       .send({ error: null, auth: true, user: doc, token: token }); //user data error null
   });
 });
+  router.post('/update', VerifyToken, async(req,res)=> {
+    const salt = await bcrypt.genSalt(10);
+    if(req.body?.password)
+    {
+      var hashedPassword = await bcrypt.hash(req.body.password,salt);
+    }
+    var presentData = await User.findOne({_id:req.body._id})
+    presentData.name=req.body?.name
+    presentData.company_name=req.body?.company_name
+    req.body?.password? presentData.password=hashedPassword : presentData=presentData;
+    var update = await User.findOneAndUpdate({_id:req.body._id}, presentData,{new:true})
+    res.json(update) 
+  })
+
 
 module.exports = router;
