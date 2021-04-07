@@ -16,6 +16,7 @@ function UserPage() {
             status: "disabled"
         }
     ]
+
     console.log(domains)
     const handleChange = (e) => {
         for (var i = 0; i < domains.length; i++){
@@ -23,8 +24,9 @@ function UserPage() {
                 domains[i].status = e.target.checked == true ? "active" : "disabled";
                 break;
             }
-            console.log(domains)
         }
+        //Post updated
+        console.log(domains)
     }
 
 
