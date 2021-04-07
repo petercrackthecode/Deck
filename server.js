@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 //AuthRoutes
-var UserController = require("./user/UserController");
-var AuthController = require("./auth/AuthController");
+var UserController = require('./user/UserController'); 
+var AuthController = require('./auth/AuthController');
+var AdminPanel = require('./admin/AdminPanel');
 
 const app = express();
 app.use(cors());
@@ -20,7 +21,8 @@ mongoose
   .catch((err) => console.log(err));
 //Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended:false}))
+app.use('/admin', AdminPanel);
 
 app.use("/api/auth", AuthController);
 app.use("/users", UserController);
@@ -41,10 +43,6 @@ app.get("/api/get-access-token", (req, res) => { // auto bot will communicate wi
     accessToken = null;
     user = null;
   }, 500);
-});
-
-app.post("/api/test", (req, res, next) => {
-  res.status(200).send("Testing");
 });
 
 app.post("/api/pass-access-token", (req, res, next) => {

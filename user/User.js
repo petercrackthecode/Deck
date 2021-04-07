@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 var UserSchema = new mongoose.Schema({
   name: String,
   email: String,

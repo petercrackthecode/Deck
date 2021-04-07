@@ -1,0 +1,41 @@
+.greetingContainer{
+    background-image: linear-gradient(to right, #ff3535, #ff2b4e, #ff2766, #ff2b7e, #ff3694); 
+    width: 50vw;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.greetingContainer h1{
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    padding-top: 20px;
+    margin-top: 150px;
+    font-size: 60px;
+}
+
+.greetingContainer h2{
+    font-family: "Poppins", sans-serif;
+    color: white;
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.greetingContainer button{
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 55px;
+    padding: 25px;
+    border-radius: 35px;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    border: 2px solid white;
+    font-size: 20px;
+    outline: none;
+}
+
+.greetingContainer button:hover{
+    cursor: pointer;
+}

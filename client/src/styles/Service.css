@@ -1,0 +1,28 @@
+.ServiceContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #F2EEEE;
+    width: 400px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.ServiceContainer h1{
+    font-family: "Poppins", sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.status{
+    height: 20px;
+    width: 20px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.endServiceContainer{
+    display: flex;
+    align-items: center;
+}
