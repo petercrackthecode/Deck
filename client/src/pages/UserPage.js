@@ -7,7 +7,7 @@ import axios from 'axios'
 
 function UserPage(props) {
     // console.log(userId)
-const [domains, setDomains] = useState([])
+    const [domains, setDomains] = useState([])
     const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
     console.log(props)
     const getDomains = (e) => {
@@ -31,16 +31,15 @@ const [domains, setDomains] = useState([])
                 break;
             }
         }
-        //Post updated
-        console.log(copydomains)
+        console.log(props.location.state.email)
         axios.post('http://localhost:5000/admin/status',
         {
             _id:LoggedInUserData['_id'],            
-            email:'testanjali@test.com',
+            email:props.location.state.email,
             status: copydomains
         })
-        .then(data => res.json(data))
-        .catch(err=>res.json(err))
+        .then(data => console.log(data))
+        .catch(err=> console.log(err))
     }
 
 
