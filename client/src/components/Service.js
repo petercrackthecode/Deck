@@ -1,8 +1,10 @@
 import React from 'react'
 import icon from '../assets/settings.png'
 import '../styles/Service.css'
+import Toggle from 'react-toggle'
+import "react-toggle/style.css"
 
-function Service({service, status}) {
+function Service({service, status, handleChange}) {
 
     const statusClass = "status " + status
 
@@ -11,7 +13,11 @@ function Service({service, status}) {
             <h1>{service}</h1>
             <dic className="endServiceContainer">
             <div className={statusClass}/>
-            <img src={icon} className="setting"/>
+            <Toggle
+                defaultChecked={status == "active" ? true : false}
+                value={service}
+                onChange={handleChange}
+                />
             </dic>
         </div>
     )

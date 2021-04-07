@@ -22,6 +22,7 @@ function Admin() {
                 temp.push(item)
             })
             setData(temp)
+            console.log(temp)
             setLoading(false)
         })
     }

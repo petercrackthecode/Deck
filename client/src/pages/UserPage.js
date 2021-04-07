@@ -5,6 +5,29 @@ import UserInfo from '../components/UserInfo'
 import '../styles/UserPage.css'
 
 function UserPage() {
+
+    const domains = [
+        {
+            name: "google.com",
+            status: "active"
+        },
+        {
+            name: "figma.com",
+            status: "disabled"
+        }
+    ]
+    console.log(domains)
+    const handleChange = (e) => {
+        for (var i = 0; i < domains.length; i++){
+            if (domains[i].name == e.target.value){
+                domains[i].status = e.target.checked == true ? "active" : "disabled";
+                break;
+            }
+            console.log(domains)
+        }
+    }
+
+
     return (
         <div>
             <Navbar />
@@ -18,11 +41,11 @@ function UserPage() {
                 <UserInfo field={"Email"} info={"INFO HERE"} />
                 <h2>Access to Services:</h2>
                 <div className="servicesContainer">
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
+                    {domains.map((service) => {
+                        return(
+                            <Service handleChange={handleChange} service={service.name} status={service.status}/>
+                        )
+                    })}
                 </div>
             </div>
         </div>

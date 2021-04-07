@@ -93,14 +93,14 @@ router.post('/register', (req, res) => {
 
   router.post('/update', VerifyToken, async(req,res)=> {
     const salt = await bcrypt.genSalt(10);
-    if(req.body?.password)
+    if(req.body.password)
     {
       var hashedPassword = await bcrypt.hash(req.body.password,salt);
     }
     var presentData = await User.findOne({_id:req.body._id})
-    presentData.name=req.body?.name
-    presentData.company_name=req.body?.company_name
-    req.body?.password? presentData.password=hashedPassword : presentData=presentData;
+    presentData.name=req.body.name
+    presentData.company_name=req.body.company_name
+    req.body.password ? presentData.password=hashedPassword : presentData=presentData;
     var update = await User.findOneAndUpdate({_id:req.body._id}, presentData,{new:true})
     res.json(update) 
   })
