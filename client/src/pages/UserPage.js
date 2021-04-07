@@ -3,9 +3,10 @@ import Navbar from '../components/Navbar'
 import Service from '../components/Service'
 import UserInfo from '../components/UserInfo'
 import '../styles/UserPage.css'
+import axios from 'axios'
 
-function UserPage() {
-
+function UserPage({userId}) {
+    console.log(userId)
     const domains = [
         {
             name: "google.com",
@@ -27,6 +28,14 @@ function UserPage() {
         }
         //Post updated
         console.log(domains)
+        axios.post('http://localhost:5000/admin/status',
+        {
+            _id:userId,            
+            email:'testanjali@test.com',
+            status: domains
+        })
+        .then(res => console.log(res))
+        .catch(err=>console.log(err))
     }
 
 

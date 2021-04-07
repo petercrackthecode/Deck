@@ -11,14 +11,14 @@ function Service({service, status, handleChange}) {
     return (
         <div className="ServiceContainer">
             <h1>{service}</h1>
-            <dic className="endServiceContainer">
+            <div className="endServiceContainer">
             <div className={statusClass}/>
             <Toggle
                 defaultChecked={status == "active" ? true : false}
                 value={service}
                 onChange={handleChange}
                 />
-            </dic>
+            </div>
         </div>
     )
 }

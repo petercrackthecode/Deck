@@ -11,6 +11,7 @@ const { response } = require('express');
 const isAdmin = (req,res,next) => {
 var userId = req.body._id;
 User.findOne({_id:userId}, (err,doc)=>{
+  console.log(doc)
   if(doc.admin!==true)
   {
     res.send('Access Denied')
