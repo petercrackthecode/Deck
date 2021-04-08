@@ -16,25 +16,34 @@ function SignIn({ setUserid }) {
     else setPassword(e.target.value);
   };
 
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        await axios
-          .post("http://localhost:5000/api/auth/login", {
-            email: email,
-            password: password,
-          })
-          .then((res) => {
-            console.log(res)
-           setUserid(res.data.user._id)
-           setUserSession(res.data.token, res.data.user)
-           if (res.data.user.admin === true) history.push("/admin");
-           else history.push("/user");
-        })
-          .catch((err) => {
-            console.log(err);
-          });
-      };
-      console.log(email)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let token = null,
+      user = null;
+
+    await axios
+      .post("http://localhost:5000/api/auth/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res);
+
+        if (res.data.user !== null && res.data.token !== null) {
+          token = res.data.token;
+          user = res.data.user;
+        }
+        
+        setUserid(res.data.user._id);
+        setUserSession(res.data.token, res.data.user);
+        if (res.data.user.admin === true) history.push("/admin");
+        else history.push("/user");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(email);
     await axios
       .post("http://localhost:5000/api/pass-access-token", {
         accessToken: token,

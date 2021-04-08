@@ -38,7 +38,6 @@ app.get("/api/get-access-token", (req, res) => { // auto bot will communicate wi
       res.send({"accessToken": accessToken, "user": user});
       // clean up the accessToken and user on the server memory after passing them out.
     }
-    else console.log("I'm not activated");
 
     accessToken = null;
     user = null;
