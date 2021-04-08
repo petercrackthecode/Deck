@@ -6,22 +6,24 @@ import UserCard from '../components/UserCard'
 import '../styles/Admin.css'
 
 function Admin() {
+    const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
     const [data,setData] =useState([])
-    const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         onPageLoad()
     },[])
-
     const onPageLoad = () => {
-        axios.get('http://localhost:5000/users/')
+        axios.post('http://localhost:5000/admin/list-all',{
+            _id:LoggedInUserData['_id']
+        })
         .then((res)=>{
             const temp = []
             res.data.map((item) => {
                 temp.push(item)
             })
             setData(temp)
+            console.log(temp)
             setLoading(false)
         })
     }
@@ -44,7 +46,7 @@ function Admin() {
                 <h2>Name</h2>
                 <div className="userContainer">
                     {
-                        data.map(item => <UserCard  name={item.name} />)
+                        data.map(item => <UserCard email={item.email}  name={item.name} />)
                     }
                 </div>
             </div>
