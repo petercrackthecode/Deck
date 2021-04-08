@@ -140,6 +140,22 @@ router.post("/login", (req, res) => {
         token: null,
       });
     }
+    var tempDomains = doc.domains;
+    var status = 'pending'
+    tempDomains.map((item)=>{
+      if(req.body.service_name === item.name)
+        status=item.status
+    })
+    if(status === 'pending')
+    {
+      return res.send({
+        error: "Your account still doesn't have access to this site!",
+        user: null,
+        auth: false,
+        token: null,
+      });
+    }
+    
     //token
     const token = jwt.sign({ _id: doc._id }, process.env.TOKEN_SECRET, {
       expiresIn: 86400,
