@@ -41,7 +41,7 @@ function Login({ setUserid }) {
   return (
     <Layout>
       <div className="Login">
-        <img className="logo" src={logo} />
+        <img className="logo" src={logo} alt="Deck logo" />
         <div className="row">
           <SignIn setUserid={setUserid} />
           <Greeting />
