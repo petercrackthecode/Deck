@@ -8,6 +8,7 @@ var UserSchema = new mongoose.Schema({
   company_name: String,
   domains: [Object],
   token: String,
+  team_name: String
 });
 mongoose.model("User", UserSchema);
 
