@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Service from '../components/Service'
 import UserInfo from '../components/UserInfo'
 import '../styles/UserPage.css'
+import axios from 'axios'
 
-function UserPage() {
+function UserPage(props) {
+    // console.log(userId)
+    const [domains, setDomains] = useState([])
+    const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
+    console.log(props)
+    const getDomains = (e) => {
+        axios.post('http://localhost:5000/admin/search-user', {
+            email : props.location.state.email,
+            _id: LoggedInUserData['_id']
+        })
+        .then((res)=>{
+            setDomains(res.data)
+        })
+    }
+    useEffect(() => {
+        getDomains()
+    }, [])
+
+    const handleChange = (e) => {
+        var copydomains=domains
+        for (var i = 0; i < copydomains.length; i++){
+            if (copydomains[i].name == e.target.value){
+                copydomains[i].status = e.target.checked == true ? "active" : "disabled";
+                break;
+            }
+        }
+        console.log(props.location.state.email)
+        axios.post('http://localhost:5000/admin/status',
+        {
+            _id:LoggedInUserData['_id'],            
+            email:props.location.state.email,
+            status: copydomains
+        })
+        .then(data => console.log(data))
+        .catch(err=> console.log(err))
+    }
+
+
     return (
         <div>
             <Navbar />
@@ -18,11 +56,11 @@ function UserPage() {
                 <UserInfo field={"Email"} info={"INFO HERE"} />
                 <h2>Access to Services:</h2>
                 <div className="servicesContainer">
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
-                    <Service service="www.google.com" status="active"/>
+                    {domains.map((service) => {
+                        return(
+                            <Service handleChange={handleChange} service={service.name} status={service.status}/>
+                        )
+                    })}
                 </div>
             </div>
         </div>

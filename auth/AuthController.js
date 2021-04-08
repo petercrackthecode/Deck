@@ -120,6 +120,7 @@ router.post("/register", (req, res) => {
   });
 });
 
+
 router.post("/login", (req, res) => {
   User.findOne({ email: req.body.email }, async (err, doc) => {
     console.log("doc", doc);
