@@ -7,6 +7,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var User = require('../user/User');
 const { response } = require('express');
+const DomainSchema = require('../company_domain_list/DomainSchema');
 
 const isAdmin = (req,res,next) => {
 var userId = req.body._id;
@@ -49,6 +50,26 @@ router.post('/status',isAdmin, (req,res)=>{
   User.findOneAndUpdate({email:req.body.email},{domains:updatedStatus},{new:true})
   .then(res=>console.log('Data updated successfully',res))
   .catch(err=>console.log(err))
+})
+
+router.post('/list-by-service', (req,res) => {
+  DomainSchema.findOne({company_name:req.body.company_name})
+  .then(comp => {
+    User.find({company_name:comp.company_name}, (err,doc) => {
+      var status = 'pending'
+      doc.map(item => {
+        item.domains.map(data=> {
+          if(req.body.service_name===data.name)
+            status=data.status
+        })
+        if(status==='active')
+        {
+          console.log(item.name)
+        }
+      })
+    }) 
+
+  })
 })
 
 module.exports = router;
