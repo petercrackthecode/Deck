@@ -140,7 +140,9 @@ router.post("/login", (req, res) => {
         token: null,
       });
     }
-    var tempDomains = doc.domains;
+    if(doc.admin!==true)
+    {
+      var tempDomains = doc.domains;
     var status = 'pending'
     tempDomains.map((item)=>{
       if(req.body.service_name === item.name)
@@ -155,6 +157,8 @@ router.post("/login", (req, res) => {
         token: null,
       });
     }
+    }
+    
     
     //token
     const token = jwt.sign({ _id: doc._id }, process.env.TOKEN_SECRET, {
