@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { AuthContext, AuthContextProvider } from '../Context/AuthContext';
 import Navbar from '../components/Navbar'
 import Service from '../components/Service'
 import UserInfo from '../components/UserInfo'
@@ -7,15 +8,17 @@ import axios from 'axios'
 
 function UserPage(props) {
     // console.log(userId)
+    const auth = useContext(AuthContext);
     const [domains, setDomains] = useState([])
     const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
-    console.log(props)
+    console.log(LoggedInUserData);
     const getDomains = (e) => {
         axios.post('http://localhost:5000/admin/search-user', {
-            email : props.location.state.email,
+            email : auth.email,
             _id: LoggedInUserData['_id']
         })
         .then((res)=>{
+            console.log(res.data);
             setDomains(res.data)
         })
     }
@@ -31,11 +34,10 @@ function UserPage(props) {
                 break;
             }
         }
-        console.log(props.location.state.email)
         axios.post('http://localhost:5000/admin/status',
         {
             _id:LoggedInUserData['_id'],            
-            email:props.location.state.email,
+            email: auth.email,
             status: copydomains
         })
         .then(data => console.log(data))

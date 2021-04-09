@@ -1,6 +1,4 @@
 import "./App.css";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
 import Auth from "./pages/Auth/";
 import { AuthContext, AuthContextProvider } from "./Context/AuthContext";
 import UserProfile from "./pages/UserProfile";
@@ -26,7 +24,7 @@ function App() {
             exact
             render={() => <UserProfile userId={userId} />}
           />
-          <Route path="/edituser" render={() => <EditUser userId={userId} />} />
+          <Route path="/edituser" render={() => <EditUser/>} />
           <Route path="/admin" component={Admin} />
           <Route path="/user" component={UserPage} />
         </Switch>

@@ -23,7 +23,7 @@ function Register({setUserid}) {
     }
       };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         await axios
           .post("http://localhost:5000/api/auth/login", {
