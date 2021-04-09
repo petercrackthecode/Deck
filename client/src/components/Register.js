@@ -23,7 +23,7 @@ function Register({setUserid}) {
     }
       };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         await axios
           .post("http://localhost:5000/api/auth/login", {
@@ -31,7 +31,7 @@ function Register({setUserid}) {
             password: password,
           })
           .then((res) => {
-            console.log(res)
+            // console.log(res)
            setUserid(res.data.user?._id)
            setUserSession(res.data.token, res.data.user)
            history.push('/user')
