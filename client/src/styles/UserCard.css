@@ -48,3 +48,8 @@
 .disabled{
     background-color: #FF6666;
 }
+
+.userCardLink{
+    text-decoration: none;
+    color: black;
+}

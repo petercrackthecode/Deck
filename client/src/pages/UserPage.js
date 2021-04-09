@@ -50,12 +50,11 @@ function UserPage(props) {
             <Navbar />
             <div className="userPageContainer">
                 <div className="userStatusContainer">
-                    <h1>User: NAME HERE</h1>
-                    <a className="active">STATUS</a>
+                    <h1>{props.location.state.name}</h1>
                 </div>
                 <h2>Information</h2>
-                <UserInfo field={"Name"} info={"INFO HERE"} />
-                <UserInfo field={"Email"} info={"INFO HERE"} />
+                <UserInfo field={"Name"} info={props.location.state.name} />
+                <UserInfo field={"Email"} info={props.location.state.email} />
                 <h2>Access to Services:</h2>
                 <div className="servicesContainer">
                     {domains.map((service) => {
