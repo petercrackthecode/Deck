@@ -17,7 +17,7 @@ function UserPage(props) {
     console.log(`auth.email`, auth.email)
     const getDomains = (e) => {
         axios.post('http://localhost:5000/admin/search-user', {
-            email : props.location.state.email,
+            email : props.location.state.email, //this is the email of the person whose data admin wants to change and not the logged user
             _id: LoggedInUserData['_id']
         })
         .then((res)=>{
