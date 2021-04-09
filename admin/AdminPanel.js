@@ -67,8 +67,8 @@ const findUsers = async(company_name,service) => {
       
     })
     const objTemp={};
-    objTemp['service_name']=service;
-    objTemp['user_in_this_service']=activeUsers
+    objTemp['service']=service;
+    objTemp['users']=activeUsers
     return objTemp;
   }
 
