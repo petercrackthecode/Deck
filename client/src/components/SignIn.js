@@ -22,6 +22,8 @@ function SignIn({ setUserid }) {
     let token = null,
       user = null;
 
+    console.log("Wassup");
+
     await axios
       .post("http://localhost:5000/api/auth/login", {
         email: email,
@@ -30,20 +32,19 @@ function SignIn({ setUserid }) {
       .then((res) => {
         console.log(res);
 
-        if (res.data.user !== null && res.data.token !== null) {
+        if (res.data.user?._id !== null && res.data.token !== null) {
           token = res.data.token;
           user = res.data.user;
+          setUserid(res.data.user._id);
+          setUserSession(res.data.token, res.data.user);
+          if (res.data.user.admin === true) history.push("/admin");
+          else history.push("/user");
         }
-        
-        setUserid(res.data.user._id);
-        setUserSession(res.data.token, res.data.user);
-        if (res.data.user.admin === true) history.push("/admin");
-        else history.push("/user");
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(email);
+
     await axios
       .post("http://localhost:5000/api/pass-access-token", {
         accessToken: token,
@@ -58,7 +59,7 @@ function SignIn({ setUserid }) {
   return (
     <div className="signInContainer">
       <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <label>
           <input
             name="email"
