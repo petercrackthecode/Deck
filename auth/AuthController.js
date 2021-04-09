@@ -154,6 +154,7 @@ router.post('/login', (req, res) => {
         if (doc.admin !== true) {
             var tempDomains = doc.domains;
             var status = 'pending';
+            // req.body.service_name === 'Deck' ? status = 'active' : status = status
             tempDomains.map((item) => {
                 if (req.body.service_name === item.name) status = item.status;
             });
