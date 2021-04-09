@@ -7,6 +7,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var User = require('../user/User');
 const { response } = require('express');
+const DomainSchema = require('../company_domain_list/DomainSchema');
 
 const isAdmin = (req,res,next) => {
 var userId = req.body._id;
@@ -49,6 +50,42 @@ router.post('/status',isAdmin, (req,res)=>{
   User.findOneAndUpdate({email:req.body.email},{domains:updatedStatus},{new:true})
   .then(res=>console.log('Data updated successfully',res))
   .catch(err=>console.log(err))
+})
+
+//list by services
+const findUsers = async(company_name,service) => {
+ const doc = await User.find({company_name:company_name})
+    const activeUsers = []
+    doc.map(item=>{
+
+      item.domains.map(data => {
+        if(data.name === service && data.status==='active')
+        {
+          activeUsers.push(item.name)
+        }
+      })
+      
+    })
+    const objTemp={};
+    objTemp['service']=service;
+    objTemp['users']=activeUsers
+    return objTemp;
+  }
+
+router.post('/list-by-service', (req,res) => {
+  DomainSchema.findOne({company_name:req.body.company_name})
+  .then(async comp => {
+        let totalServicesList=[]
+        comp.domain_list.map(service => {
+          //console.log(service)
+        const objTemp = findUsers(req.body.company_name,service)
+        //console.log(objTemp)
+        totalServicesList.push(objTemp)
+        })
+        totalServicesList = await Promise.all(totalServicesList)
+        res.send(totalServicesList)
+
+ })
 })
 
 module.exports = router;
