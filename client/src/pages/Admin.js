@@ -32,7 +32,7 @@ function Admin() {
             <Navbar />
             <div className="adminContainer">
                 <div className="searchContainer">
-                    <h1 className="adminContainerHeading">Current Users</h1>
+                    <h1 className="adminContainerHeading">Current Services</h1>
                     <label>
                         <input
                             name="search"
