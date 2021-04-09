@@ -10,8 +10,15 @@
 }
 
 .field{
-    padding: 10px;
+    padding: 20px;
     background-color: #F2EEEE;
     margin-right: 10px;
-    width: 75px;
+    width: 115px;
+    color: black;
+}
+
+.info{
+    color: black;
+    
+    font-family: "Poppins", sans-serif;
 }

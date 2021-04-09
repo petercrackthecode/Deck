@@ -32,15 +32,15 @@ function Admin() {
     }
 
     const searchUsers = (e) => {
-        console.log(e.target.value == "")
-        if (search == ""){
+        console.log(filteredData)
+        if (e.target.value == ""){
             setFilteredData(data)
         }else{
             const copy = data;
             setFilteredData(copy.filter((user) => user.name.toLowerCase().includes(e.target.value.toLowerCase())))
+            
         }
     }
-
     return (
         <div>
             <Navbar />
