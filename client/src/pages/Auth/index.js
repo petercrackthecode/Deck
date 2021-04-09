@@ -66,6 +66,7 @@ export default function Auth() {
                 .post('http://localhost:5000/api/auth/login', {
                     email: auth.email,
                     password: auth.password,
+                    // service_name:'Deck'
                 })
                 .then((res) => {
                     console.log(res);
