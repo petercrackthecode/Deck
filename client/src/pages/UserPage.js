@@ -47,7 +47,7 @@ function UserPage(props) {
         .catch(err=> console.log(err))
     }
 
-
+    console.log(props)
     return (
         <div>
             <Navbar />
@@ -59,7 +59,7 @@ function UserPage(props) {
                 <UserInfo field={"Name"} info={props.location.state.name} />
                 <UserInfo field={"Email"} info={props.location.state.email} />
                 <h2>Access to Services:</h2>
-                <div className="servicesContainer">
+                <div className="currentServices">
                     {domains.map((service) => {
                         return(
                             <Service handleChange={handleChange} service={service.name} status={service.status}/>
