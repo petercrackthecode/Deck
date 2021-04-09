@@ -43,7 +43,17 @@ export default function Auth() {
                 )
                 .then((res) => {
                     console.log(res);
-                    auth.setAuth({ ...auth, id: res.data.user?._id });
+                    auth.setAuth({
+                        ...auth,
+                        id: res.data.user._id,
+                        email: res.data.user.email,
+                        password: res.data.user.password,
+                        name: res.data.user.name,
+                        company_name: res.data.user.company_name,
+                        admin: res.data.user.admin,
+                        domains: res.data.user.domains,
+                    });
+                    
                     setUserSession(res.data.token, res.data.user);
                     setAlert({
                         isOpen: true,
@@ -70,7 +80,11 @@ export default function Auth() {
                 .then((res) => {
                     console.log(res);
                     if (res.data.error) {
-                        setAlert({isOpen: true, message: res.data.error || "Error", severity: "error"})
+                        setAlert({
+                            isOpen: true,
+                            message: res.data.error || 'Error',
+                            severity: 'error',
+                        });
                     }
 
                     if (
@@ -84,7 +98,16 @@ export default function Auth() {
                         });
                         token = res.data.token;
                         user = res.data.user;
-                        auth.setAuth({ ...auth, id: res.data.user._id });
+                        auth.setAuth({
+                            ...auth,
+                            id: res.data.user._id,
+                            email: res.data.user.email,
+                            password: res.data.user.password,
+                            name: res.data.user.name,
+                            company_name: res.data.user.company_name,
+                            admin: res.data.user.admin,
+                            domains: res.data.user.domains,
+                        });
                         setUserSession(res.data.token, res.data.user);
                         if (res.data.user.admin === true)
                             history.push('/admin');
