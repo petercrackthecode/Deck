@@ -57,6 +57,7 @@ router.post('/list-by-service', (req,res) => {
   .then(comp => {
     User.find({company_name:comp.company_name}, (err,doc) => {
       var status = 'pending'
+      var arr = [];
       doc.map(item => {
         item.domains.map(data=> {
           if(req.body.service_name===data.name)
@@ -64,9 +65,10 @@ router.post('/list-by-service', (req,res) => {
         })
         if(status==='active')
         {
-          console.log(item.name)
+          arr.push(item.name)
         }
       })
+      res.send(arr)
     }) 
 
   })
