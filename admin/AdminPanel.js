@@ -52,33 +52,37 @@ router.post('/status',isAdmin, (req,res)=>{
   .catch(err=>console.log(err))
 })
 
+//list by services
+const findUsers = async(company_name,service) => {
+ const doc = await User.find({company_name:company_name})
+    const activeUsers = []
+    doc.map(item=>{
+
+      item.domains.map(data => {
+        if(data.name === service && data.status==='active')
+        {
+          activeUsers.push(item.name)
+        }
+      })
+      
+    })
+    const objTemp={};
+    objTemp['service_name']=service;
+    objTemp['user_in_this_service']=activeUsers
+    return objTemp;
+  }
+
 router.post('/list-by-service', (req,res) => {
   DomainSchema.findOne({company_name:req.body.company_name})
-  .then(comp => {
-        const totalServicesList=[]
+  .then(async comp => {
+        let totalServicesList=[]
         comp.domain_list.map(service => {
-          console.log(service)
-          User.find({company_name:req.body.company_name}, (err,doc) => {
-            const activeUsers = []
-            doc.map(item=>{
-      
-              item.domains.map(data => {
-                if(data.name === service && data.status==='active')
-                {
-                  activeUsers.push(item.name)
-                }
-              })
-              
-            })
-            const objTemp={};
-            objTemp['service_name']=service;
-            objTemp['user_in_this_service']=activeUsers
-            totalServicesList.push(objTemp)
-            console.log(totalServicesList)
-          })
-
+          //console.log(service)
+        const objTemp = findUsers(req.body.company_name,service)
+        //console.log(objTemp)
+        totalServicesList.push(objTemp)
         })
-        console.log(totalServicesList)
+        totalServicesList = await Promise.all(totalServicesList)
         res.send(totalServicesList)
 
  })
