@@ -20,7 +20,7 @@ function App() {
           <Route
             path="/"
             exact
-            component={Auth}
+            component={<Login />}
           />
           <Route
             path="/profile"

@@ -41,6 +41,19 @@ function Admin() {
         }
     }
 
+
+    const users = [
+        {
+            name: "Keshavaa",
+            services: [
+                "www.google.com",
+                "autobot.com",
+                "indiethreads"
+            ]
+        },
+    ]
+
+
     return (
         <div>
             <Navbar />
@@ -70,3 +83,15 @@ function Admin() {
 }
 
 export default Admin
+
+
+
+
+
+
+
+
+
+
+
+
