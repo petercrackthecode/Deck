@@ -16,13 +16,13 @@ User.findOne({_id:userId}, (err,doc)=>{
   if(doc.admin!==true)
   {
     res.send('Access Denied')
-  }
+  } 
   else{
     next();
   }
 })
 }
-router.post('/list-all',(req,res)=>{
+router.post('/list-all',(req,res)=>{ 
   User.findOne({_id:req.body._id})
   .then((comp)=>{
     User.find({company_name:comp.company_name})
@@ -72,7 +72,7 @@ const findUsers = async(company_name,service) => {
     return objTemp;
   }
 
-router.post('/list-by-service', (req,res) => {
+router.post('/list-by-service', isAdmin, (req,res) => {
   DomainSchema.findOne({company_name:req.body.company_name})
   .then(async comp => {
         let totalServicesList=[]

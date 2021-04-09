@@ -1,27 +1,28 @@
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Navbar from '../components/Navbar'
 import '../styles/Services.css'
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemPanel, AccordionItemButton } from 'react-accessible-accordion'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 function Services() {
+    const [data, setData] = useState([])
+    const LoggedInUserData = JSON.parse(sessionStorage.getItem('user'))
 
-    const mockServices = [
-        {
-            "service": "www.indiethreads.com",
-            "users": [
-                "Keshavaa Shaiskandan",
-                "Peter"
-            ]
-        },
-        {
-            "service": "www.autobot.com",
-            "users": [
-                "Anjali",
-                "Peter"
-            ]
-        }
-    ]
+    useEffect(() => {
+        handleServices()
+    },[]) 
+
+    const handleServices = () => {
+        axios.post('http://localhost:5000/admin/list-by-service', {
+            _id: LoggedInUserData['_id'],
+            company_name:LoggedInUserData['company_name']
+        })
+        .then(res => {
+            setData(res.data)
+        })
+        .catch(err => console.log(err))
+    }
 
     return (
         <div>
@@ -41,7 +42,7 @@ function Services() {
                 </div>
             </div>
             <Accordion allowZeroExpanded className="accordionContainer">
-                {mockServices.map((service) => (
+                {data.map((service) => (
                     <AccordionItem key={service} className="serviceItem">
                         <AccordionItemHeading>
                             <AccordionItemButton className="headingText">
