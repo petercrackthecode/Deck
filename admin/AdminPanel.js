@@ -55,23 +55,33 @@ router.post('/status',isAdmin, (req,res)=>{
 router.post('/list-by-service', (req,res) => {
   DomainSchema.findOne({company_name:req.body.company_name})
   .then(comp => {
-    User.find({company_name:comp.company_name}, (err,doc) => {
-      var status = 'pending'
-      var arr = [];
-      doc.map(item => {
-        item.domains.map(data=> {
-          if(req.body.service_name===data.name)
-            status=data.status
-        })
-        if(status==='active')
-        {
-          arr.push(item.name)
-        }
-      })
-      res.send(arr)
-    }) 
+        const totalServicesList=[]
+        comp.domain_list.map(service => {
+          console.log(service)
+          User.find({company_name:req.body.company_name}, (err,doc) => {
+            const activeUsers = []
+            doc.map(item=>{
+      
+              item.domains.map(data => {
+                if(data.name === service && data.status==='active')
+                {
+                  activeUsers.push(item.name)
+                }
+              })
+              
+            })
+            const objTemp={};
+            objTemp['service_name']=service;
+            objTemp['user_in_this_service']=activeUsers
+            totalServicesList.push(objTemp)
+            console.log(totalServicesList)
+          })
 
-  })
+        })
+        console.log(totalServicesList)
+        res.send(totalServicesList)
+
+ })
 })
 
 module.exports = router;
