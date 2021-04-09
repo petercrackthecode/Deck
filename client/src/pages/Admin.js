@@ -8,7 +8,9 @@ import '../styles/Admin.css'
 function Admin() {
     const LoggedInUserData= JSON.parse(sessionStorage.getItem('user'))
     const [data,setData] =useState([])
+    const [filteredData, setFilteredData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         onPageLoad()
@@ -23,10 +25,22 @@ function Admin() {
                 temp.push(item)
             })
             setData(temp)
+            setFilteredData(temp)
             console.log(temp)
             setLoading(false)
         })
     }
+
+    const searchUsers = (e) => {
+        console.log(e.target.value == "")
+        if (search == ""){
+            setFilteredData(data)
+        }else{
+            const copy = data;
+            setFilteredData(copy.filter((user) => user.name.toLowerCase().includes(e.target.value.toLowerCase())))
+        }
+    }
+
     return (
         <div>
             <Navbar />
@@ -40,13 +54,14 @@ function Admin() {
                             placeholder="Search Users..."
                             required
                             className="form-control"
+                            onChange={(e) => searchUsers(e)}
                         />
                     </label>
                 </div>
                 <h2>Name</h2>
                 <div className="userContainer">
                     {
-                        data.map(item => <UserCard email={item.email}  name={item.name} />)
+                        filteredData.map(item => <UserCard email={item.email}  name={item.name} />)
                     }
                 </div>
             </div>
