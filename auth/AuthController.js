@@ -40,7 +40,7 @@ router.post("/register", (req, res) => {
         User.findOne({ email: req.body.email }, async (error, doc) => {
           if (doc)
             return res.send({
-              error: "Email already exists! Sign in instead.",
+              error: "Account already exists! Sign in instead.",
               user: null,
               token: null,
             });
