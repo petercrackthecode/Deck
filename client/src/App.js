@@ -9,6 +9,7 @@ import { Link, Switch, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Admin from "./pages/Admin";
 import UserPage from "./pages/UserPage";
+import Services from './pages/Services';
 
 function App() {
   const [userId, setUserid] = useState("");
@@ -29,6 +30,7 @@ function App() {
           <Route path="/edituser" render={() => <EditUser userId={userId} />} />
           <Route path="/admin" component={Admin} />
           <Route path="/user" component={UserPage} />
+          <Route path='/services' render={() => <Services />} />
         </Switch>
       </div>
     </AuthContextProvider>
