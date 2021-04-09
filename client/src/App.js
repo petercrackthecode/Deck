@@ -31,9 +31,6 @@ function App() {
           <Route path="/admin" component={Admin} />
           <Route path="/user" component={UserPage} />
           <Route path='/services' render={() => <Services />} />
-          <Route path='/signup' exact render={()=><SignUp setUserid={setUserid}/>} />
-          <Route path='/profile' exact render={()=><UserProfile userId={userId}/>} />
-          <Route path='/' exact render={()=><Login setUserid={setUserid}/>} />
         </Switch>
       </div>
     </AuthContextProvider>
