@@ -16,8 +16,8 @@ router.get('/list', (req, res) => {
     temp.save().then((resp) => res.json(resp));
 });
 
+
 router.post('/register', async (req, res) => {
-	console.log(`Hello`);
     User.findOne({ email: req.body.email }, async (error, doc) => {
         if (error)
             res.status(500).send({
@@ -34,48 +34,40 @@ router.post('/register', async (req, res) => {
                 token: null,
             });
     });
-
-    const domList = [];
-    Domain.findOne(
-        { company_name: req.body.company_name },
-        async (err, doc) => {
-            if (err)
-                res.status(500).send({
-                    error:
-                        "Unknown server error. Please contact Deck's customer support for help",
-                    user: null,
-                    token: null,
-                });
-
-            doc.domain_list.forEach((item) => {
-                var temp = {
-                    name: item,
-                    status: 'pending',
-                };
-                domList.push(temp);
+    const domList =[]
+    Domain.findOne({ company_name: req.body.company_name })
+    .then(async (result)=>{
+        result.domain_list.forEach((item) => {
+            var temp = {
+                name: item,
+                status: 'pending',
+            };
+            domList.push(temp);
+        });
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+        const user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword, 
+            token: jwt.sign({ email: req.body.email }, process.env.TOKEN_SECRET),
+            company_name: req.body.company_name,
+            domains: domList,
+        });
+        user.save()
+            .then((resp) => {
+                res.send({ user: resp, error: null });
+            })
+            .catch((err) => {
+                res.status(400).send({user: null, error: err});
             });
-        }
-    );
-    const salt = await bcrypt.genSalt(10);
-	console.log(`typeof req.body.password = ${typeof req.body.password}, req.body.password = ${req.body.password}`)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    })
+    .catch(err=>console.log(err))
+   
 
-    const user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword,
-        token: jwt.sign({ email: req.body.email }, process.env.TOKEN_SECRET),
-        company_name: req.body.company_name,
-        domains: domList,
-    });
-    user.save()
-        .then((resp) => {
-            res.send({ user: resp, error: null });
-        })
-        .catch((err) => {
-			console.log("got an error baby!");
-			//res.status(400).send({user: null, error: err});
-		});
+
+   
 });
 
 router.get('/me', VerifyToken, (req, res) => {
