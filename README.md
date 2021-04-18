@@ -1,5 +1,8 @@
 # Deck
 
+![1](https://user-images.githubusercontent.com/64865136/115148565-c3b97700-a07d-11eb-8e63-75c94974efc6.jpg)
+
+
 ## What is Deck?
 "An admin board to manage your employees' access to workplace's resources."
 Deck is a platform for admins and managers to handle the access of the company's data and resources. Any employee being able to access the data even after leaving the company may result in a privacy breach on the company's end. Deck solves this problem.
@@ -73,4 +76,4 @@ Give proper credits. This could be a link to any repo which inspired you to buil
 ## License
 A short snippet describing the license (MIT, Apache etc)
 
-MIT © [Yourname]()
+ © [Deck]()
