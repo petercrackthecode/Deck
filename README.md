@@ -12,14 +12,11 @@ One of our teammates noticed a security loophole with the current authentication
 
 Organizations lacking an efficient and secure method to allocate an employee their resources seemed to be an extrinsic problem. We built Deck to solve this problem.
 
-
-## Code style
-If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
-
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
- 
 ## Screenshots
-upload the pictures
+
+![media](https://user-images.githubusercontent.com/64865136/115155362-47369080-a09d-11eb-9645-162bb7a32093.gif)
+
+![5](https://user-images.githubusercontent.com/64865136/115155283-d1cac000-a09c-11eb-9430-ad4dbdc5206c.jpg)
 
 ## Tech/framework used
 
@@ -35,31 +32,26 @@ upload the pictures
 - Implementation and integration of oAuth service which is like that of "google sign in/sign up."
 - Someone on a 3rd party platform can use authentication with Deck (provided that the platform has Deck authentication integrated) and get access to their account if the admin authorise it.
 
-## Code Example
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
-
 ## Installation
 
 - [Install Node JS] (https://nodejs.org/en/download/)
 - [Install React] (https://www.tutorialspoint.com/reactjs/reactjs_environment_setup.htm)
-- 
-    - **Step 1** 
+
+    - **Step 1**  (Backend)
+      npm install
+      
+      node server.js
+      
+      
+      
+    - **Step 2** (Frontend)
 
       cd client (or any other directory name)
       
-    - **Step 2** 
-
+      npm install
+      
       npm start
       
-## API Reference
-
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
-## Tests
-Describe and show how to run the tests with code examples.
-
-## How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
 
 ## Contribute
 
@@ -70,10 +62,6 @@ Found a bug? See the scope of adding another feature? Feel free to contribute!
 - Wait for you to get assigned to it and then start working
 - Make a PR!
 
-## Credits
-Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
-
 ## License
-A short snippet describing the license (MIT, Apache etc)
 
- © [Deck]()
+ - MIT : http://opensource.org/licenses/MIT
